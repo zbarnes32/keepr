@@ -49,4 +49,18 @@ public ActionResult<List<Keep>> GetAllKeeps()
     }
 }
 
+[HttpGet("{keepId}")]
+public ActionResult<Keep> GetKeepById(int keepId)
+{
+    try 
+    {
+        Keep keep = _keepsService.GetKeepById(keepId);
+        return Ok(keep);
+    }
+    catch (Exception exception)
+    {
+      return BadRequest(exception.Message);
+    }
+}
+
 }

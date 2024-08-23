@@ -1,5 +1,6 @@
 
 
+
 namespace keepr.Services;
 
 public class KeepsService
@@ -21,5 +22,16 @@ public class KeepsService
     {
         List<Keep> keeps = _repository.GetAllKeeps();
         return keeps;
+    }
+
+    internal Keep GetKeepById(int keepId)
+    {
+        Keep keep = _repository.GetKeepById(keepId);
+
+        if (keep == null)
+        {
+            throw new Exception($"Unable to find keep with the id of {keepId}");
+        }
+        return keep;
     }
 }
