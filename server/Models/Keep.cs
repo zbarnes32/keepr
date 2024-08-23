@@ -1,6 +1,6 @@
 namespace keepr.Models;
 
-public class Keep
+public class Keep : RepoItem<int>
 {
     public string Name { get; set; }
     public string Description { get; set; }
