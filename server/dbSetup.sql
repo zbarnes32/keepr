@@ -20,3 +20,10 @@ CREATE TABLE
     FOREIGN KEY (creatorId) REFERENCES accounts (id) ON DELETE CASCADE
   );
 
+ALTER TABLE accounts
+ADD coverImg VARCHAR(1000) NOT NULL;
+
+SELECT
+*
+FROM
+accounts
