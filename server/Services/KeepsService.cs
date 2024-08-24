@@ -18,6 +18,19 @@ public class KeepsService
         return keep;
     }
 
+    internal string DestroyKeep(int keepId, string userId)
+    {
+        Keep keepToDestroy = GetKeepById(keepId);
+        if (keepToDestroy.CreatorId != userId)
+        {
+            throw new Exception("Unable to delete a keep you did not create.");
+        }
+
+        _repository.DestroyKeep(keepId);
+
+        return $"{keepToDestroy.Name} has been deleted.";
+    }
+
     internal List<Keep> GetAllKeeps()
     {
         List<Keep> keeps = _repository.GetAllKeeps();
@@ -33,5 +46,22 @@ public class KeepsService
             throw new Exception($"Unable to find keep with the id of {keepId}");
         }
         return keep;
+    }
+
+    internal Keep UpdateKeep(int keepId, string userId, Keep keepData)
+    {
+        Keep keepToUpdate = GetKeepById(keepId);
+
+        if(keepToUpdate.CreatorId != userId)
+        {
+            throw new Exception("Unable to update a keep that you did not create");
+        }
+
+        keepToUpdate.Name = keepData.Name ?? keepToUpdate.Name;
+        keepToUpdate.Description = keepData.Description ?? keepToUpdate.Description;
+        keepToUpdate.Img = keepData.Img ?? keepToUpdate.Img;
+        
+        Keep updatedKeep = _repository.UpdateKeep(keepToUpdate);
+        return updatedKeep;
     }
 }

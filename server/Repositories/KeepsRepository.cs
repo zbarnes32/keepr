@@ -2,6 +2,8 @@
 
 
 
+
+
 namespace keepr.Repositories;
 
 public class KeepsRepository
@@ -33,6 +35,16 @@ public class KeepsRepository
         }, keepData).FirstOrDefault();
 
         return keep;
+    }
+
+    internal void DestroyKeep(int keepId)
+    {
+        string sql = "DELETE FROM keeps WHERE id = @keepId LIMIT 1;";
+
+        int rowsAffected = _db.Execute(sql, new { keepId });
+
+        if(rowsAffected == 0) throw new Exception("Unable to delete.");
+        if (rowsAffected > 1) throw new Exception("Deleted more than attended.");
     }
 
     internal List<Keep> GetAllKeeps()
@@ -70,6 +82,33 @@ public class KeepsRepository
         keep.Creator = profile;
         return keep;
     }, new { keepId }).FirstOrDefault();
+
+        return keep;
+    }
+
+    internal Keep UpdateKeep(Keep keepData)
+    {
+        string sql = @"
+        UPDATE keeps
+        SET
+        name = @Name,
+        description = @Description,
+        img = @Img
+        WHERE id = @Id LIMIT 1;
+
+        SELECT
+        keeps.*,
+        accounts.*
+        FROM keeps
+        JOIN accounts ON accounts.id = keeps.creatorId
+        WHERE keeps.id = @Id;";
+
+        Keep keep = _db.Query<Keep, Profile, Keep>(sql, 
+        (keep, profile) => 
+    {
+        keep.Creator = profile;
+        return keep;
+    }, keepData).FirstOrDefault();
 
         return keep;
     }
