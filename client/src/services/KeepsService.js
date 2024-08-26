@@ -5,6 +5,10 @@ import { Keep } from "@/models/Keep.js"
 
 
 class KeepsService {
+  async getKeepById(keepId) {
+      const response = await api.get(`api/keeps/${keepId}`)
+      logger.log("Got the keep via its id", response.data)
+  }
   setActiveKeep(keepProp) {
       AppState.activeKeep = keepProp
   }

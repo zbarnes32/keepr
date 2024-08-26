@@ -2,13 +2,24 @@
 import { AppState } from '@/AppState.js';
 import { Keep } from '@/models/Keep.js';
 import { keepsService } from '@/services/KeepsService.js';
-import { computed } from 'vue';
+import Pop from '@/utils/Pop.js';
+import { computed, watch } from 'vue';
+import { useRoute } from 'vue-router';
 
 const keep = computed(() => AppState.activeKeep)
 // const props = defineProps({
 //     keepProp: { type: Keep, required: true }
 // })
 
+//FIXME: Since I'm in a model, how do I get the keepId. Can't use route.params.keepId, right?
+async function getKeepById(keepId) {
+    try {
+      await keepsService.getKeepById(keepId)
+    }
+    catch (error){
+      Pop.error(error);
+    }
+}
 
 </script>
 
