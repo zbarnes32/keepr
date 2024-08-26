@@ -30,8 +30,7 @@ async function getKeeps(){
     </div>
   </section>
 
-  <MainModal modalId="keepModal">
-        <template #modalHeader></template>
+  <MainModal modalId="keepModal" class="modal-xl">
         <template #modalBody><KeepDetailsCard/></template>
   </MainModal>
 </template>
