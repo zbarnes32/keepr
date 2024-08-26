@@ -1,9 +1,11 @@
 <script setup>
+import { AppState } from '@/AppState.js';
+import KeepCard from '@/components/globals/KeepCard.vue';
 import { keepsService } from '@/services/KeepsService.js';
 import Pop from '@/utils/Pop.js';
-import { onMounted } from 'vue';
+import { computed, onMounted } from 'vue';
 
-
+const keeps = computed(() => AppState.keeps)
 
 onMounted(getKeeps)
 
@@ -18,7 +20,13 @@ async function getKeeps(){
 </script>
 
 <template>
-  <h1>Keeps</h1>
+  <section class="container">
+    <div class="row">
+      <div v-for="keep in keeps" :key="keep.id" class="col-md-3">
+        <KeepCard :keep="keep" />
+      </div>
+    </div>
+  </section>
 </template>
 
 <style scoped lang="scss">
