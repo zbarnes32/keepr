@@ -1,6 +1,7 @@
 <script setup>
 import Navbar from './components/Navbar.vue';
 import { AppState } from './AppState.js';
+import MainModal from './components/globals/MainModal.vue';
 
 </script>
 
@@ -14,6 +15,8 @@ import { AppState } from './AppState.js';
   <!-- <footer class="bg-dark text-light">
     Made with 💖 by CodeWorks
   </footer> -->
+
+  <MainModal/>
 </template>
 
 <style lang="scss">

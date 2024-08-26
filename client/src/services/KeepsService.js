@@ -5,6 +5,10 @@ import { Keep } from "@/models/Keep.js"
 
 
 class KeepsService {
+  setActiveKeep(keepProp) {
+      AppState.activeKeep = keepProp
+  }
+  
   async getKeeps() {
     const response = await api.get('api/keeps')
     logger.log("Got the keeps", response.data)

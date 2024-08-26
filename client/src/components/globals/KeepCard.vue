@@ -1,23 +1,29 @@
 <script setup>
 import { Keep } from '@/models/Keep.js';
+import { keepsService } from '@/services/KeepsService.js';
 
 
-defineProps({ keep: {type: Keep, required: true} })
+const props = defineProps({ keepProp: {type: Keep, required: true} })
+
+function setActiveKeep() {
+    keepsService.setActiveKeep(props.keepProp)
+}
 </script>
 
 
 <template>
     <section>
-        <div class="shadow">
-            <div class="card bg-dark text-white">
-                <img :src="keep.img" class="card-img" :alt="keep.name">
+        <div class="shadow" role="button">
+            <div class="card bg-dark text-white" data-bs-toggle="modal" data-bs-target="#keepModal" @click="setActiveKeep()">
+                <img :src="keepProp.img" class="card-img" :alt="keepProp.name">
             <div class="card-img-overlay">
-                <p class="fs-4 card-name">{{ keep.name }}</p>
-                <img :src="keep.creator.picture" class="creator-picture">
+                <p class="fs-4 card-name">{{ keepProp.name }}</p>
+                <img :src="keepProp.creator.picture" class="creator-picture">
             </div>
             </div>
         </div>
     </section>
+
 </template>
 
 
