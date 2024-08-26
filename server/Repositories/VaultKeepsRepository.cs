@@ -19,7 +19,8 @@ public class VaultKeepsRepository
 
        SELECT 
        vaultKeeps.*
-       FROM vaultKeeps 
+       FROM vaultKeeps
+       JOIN accounts ON accounts.id = vaultKeeps.creatorId 
        WHERE vaultKeeps.id = LAST_INSERT_ID();";
 
         VaultKeep vaultKeep = _db.Query<VaultKeep>(sql, vaultKeepData).FirstOrDefault();
