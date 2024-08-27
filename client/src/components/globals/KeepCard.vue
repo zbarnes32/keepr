@@ -1,12 +1,24 @@
 <script setup>
 import { Keep } from '@/models/Keep.js';
 import { keepsService } from '@/services/KeepsService.js';
+import Pop from '@/utils/Pop.js';
 
 
 const props = defineProps({ keepProp: {type: Keep, required: true} })
 
 function setActiveKeep() {
     keepsService.setActiveKeep(props.keepProp)
+}
+
+async function destroyKeep(keepId){
+    try {
+      const wantsToDestroy = await Pop.confirm(`Are you sure you want to delete the ${props.keepProp.name}?`)
+      if (!wantsToDestroy) return
+      await keepsService.destroyKeep(keepId)
+    }
+    catch (error){
+      Pop.error(error);
+    }
 }
 </script>
 
@@ -17,6 +29,10 @@ function setActiveKeep() {
             <div class="card bg-dark text-white" data-bs-toggle="modal" data-bs-target="#keepModal" @click="setActiveKeep()">
                 <img :src="keepProp.img" class="card-img" :alt="keepProp.name">
             <div class="card-img-overlay">
+                <!-- FIXME: Only show for the creator of the keep -->
+                <div>
+                    <button class="bg-danger"><i class="mdi mdi-delete-forever text-light"></i></button>
+                </div>
                 <p class="fs-4 card-name">{{ keepProp.name }}</p>
                 <img :src="keepProp.creator.picture" class="creator-picture">
             </div>

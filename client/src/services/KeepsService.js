@@ -5,6 +5,12 @@ import { Keep } from "@/models/Keep.js"
 
 
 class KeepsService {
+  async destroyKeep(keepId) {
+    const response = await api.delete(`api/keeps/${keepId}`)
+    logger.log('Deleting the keep', response.data)
+    AppState.activeKeep = null
+  }
+  
   async createKeep(keepData) {
       const response = await api.post('api/keeps', keepData)
       logger.log("Created a keep", response.data)
