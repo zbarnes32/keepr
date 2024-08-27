@@ -1,17 +1,57 @@
 <script setup>
-import { computed } from 'vue';
+import { computed, onMounted } from 'vue';
 import { AppState } from '../AppState.js';
+import KeepCard from '@/components/globals/KeepCard.vue';
+import { keepsService } from '@/services/KeepsService.js';
+import Pop from '@/utils/Pop.js';
+import { Keep } from '@/models/Keep.js';
 
 const account = computed(() => AppState.account)
+const keeps = computed(() => AppState.keeps)
+const vaults = computed(() => AppState.vaults)
+
+defineProps({ keepProp: { type: Keep }})
+
+onMounted(getKeeps)
+
+async function getKeeps(){
+  try {
+    await keepsService.getKeeps()
+  }
+  catch (error){
+    Pop.error(error);
+  }
+}
 
 </script>
 
 <template>
-  <div class="about text-center">
+  <div class="about container">
     <div v-if="account">
-      <h1>Welcome {{ account.name }}</h1>
-      <img class="rounded" :src="account.picture" alt="" />
-      <p>{{ account.email }}</p>
+      <section class="row text-center">
+        <div class="col-12">
+          <img :src="account.coverImg" alt="Cover Image">
+          <img :src="account.picture" :alt="account.name" class="profile-picture">
+          <p class="fs-2">{{ account.name }}</p>
+          <p>{{vaults.length }} Vaults | {{ keeps.length }} Keeps</p>
+        </div>
+      </section>
+      <section class="row">
+        <div class="col-12">
+          <p class="fs-3">Vaults</p>
+          <!-- Insert Vault Cards here -->
+        </div>
+      </section>
+      <section class="row">
+        <p class="fs-3">Keeps</p>
+        <div v-for="keep in keeps" :key="keep.id" class="col-md-3">
+          <!-- FIXME: Only show the cards that you are the creator of. -->
+          <!-- <div v-if="account?.id == keepProp.creatorId"> -->
+            <KeepCard :keepProp="keep" />
+          <!-- </div> -->
+        </div>
+        
+      </section>
     </div>
     <div v-else>
       <h1>Loading... <i class="mdi mdi-loading mdi-spin"></i></h1>

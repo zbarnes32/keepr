@@ -4,6 +4,7 @@ import { loadState, saveState } from '../utils/Store.js';
 import Login from './Login.vue';
 import MainModal from './globals/MainModal.vue';
 import CreateKeepForm from './globals/CreateKeepForm.vue';
+import CreateVaultForm from './globals/CreateVaultForm.vue';
 
 const theme = ref(loadState('theme') || 'light')
 
@@ -38,7 +39,7 @@ function toggleTheme() {
           </a>
           <ul class="dropdown-menu dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <li><a class="dropdown-item" role="button" data-bs-toggle="modal" data-bs-target="#createKeepModal">New Keep</a></li>
-            <li><a class="dropdown-item" href="#">New Vault</a></li>
+            <li><a class="dropdown-item" role="button" data-bs-toggle="modal" data-bs-target="#createVaultModal">New Vault</a></li>
           </ul>
         </li>
       </ul>
@@ -56,6 +57,11 @@ function toggleTheme() {
   <MainModal modalId="createKeepModal">
     <template #modalHeader>Create a Keep</template>
     <template #modalBody><CreateKeepForm /></template>
+  </MainModal>
+
+  <MainModal modalId="createVaultModal">
+    <template #modalHeader>Create a Vault</template>
+    <template #modalBody><CreateVaultForm /></template>
   </MainModal>
 </template>
 
