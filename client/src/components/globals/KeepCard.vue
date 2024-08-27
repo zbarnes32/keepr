@@ -1,8 +1,11 @@
 <script setup>
+import { AppState } from '@/AppState.js';
 import { Keep } from '@/models/Keep.js';
 import { keepsService } from '@/services/KeepsService.js';
 import Pop from '@/utils/Pop.js';
+import { computed } from 'vue';
 
+const account = computed(() => AppState.account)
 
 const props = defineProps({ keepProp: {type: Keep, required: true} })
 
@@ -29,10 +32,8 @@ async function destroyKeep(keepId){
             <div class="card bg-dark text-white" data-bs-toggle="modal" data-bs-target="#keepModal" @click="setActiveKeep()">
                 <img :src="keepProp.img" class="card-img" :alt="keepProp.name">
             <div class="card-img-overlay">
-                <!-- FIXME: Only show for the creator of the keep -->
-                <div>
-                    <button class="bg-danger"><i class="mdi mdi-delete-forever text-light"></i></button>
-                </div>
+                    <button v-if="account?.id == keepProp.creatorId" class="bg-danger rounded-pill" @click="destroyKeep(keepProp.id)"><i class="mdi mdi-delete-forever text-light"></i>
+                    </button>
                 <p class="fs-4 card-name">{{ keepProp.name }}</p>
                 <img :src="keepProp.creator.picture" class="creator-picture">
             </div>

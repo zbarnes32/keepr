@@ -9,8 +9,11 @@ class KeepsService {
     const response = await api.delete(`api/keeps/${keepId}`)
     logger.log('Deleting the keep', response.data)
     AppState.activeKeep = null
+    const keepIndex = AppState.keeps.findIndex(keep => keep.id == keepId)
+    if (keepIndex == -1) throw new Error("Unable to find the keepIndex.")
+    AppState.keeps.splice(keepIndex, 1)
   }
-  
+
   async createKeep(keepData) {
       const response = await api.post('api/keeps', keepData)
       logger.log("Created a keep", response.data)
