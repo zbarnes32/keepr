@@ -1,9 +1,4 @@
 
-
-
-
-
-
 namespace keepr.Repositories;
 
 public class KeepsRepository
@@ -93,7 +88,8 @@ public class KeepsRepository
         SET
         name = @Name,
         description = @Description,
-        img = @Img
+        img = @Img,
+        views = @Views
         WHERE id = @Id LIMIT 1;
 
         SELECT

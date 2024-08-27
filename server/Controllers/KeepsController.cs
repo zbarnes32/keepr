@@ -50,10 +50,12 @@ public ActionResult<List<Keep>> GetAllKeeps()
 }
 
 [HttpGet("{keepId}")]
-public ActionResult<Keep> GetKeepById(int keepId)
+public async Task<ActionResult<Keep>> GetKeepById(int keepId)
 {
     try 
     {
+        Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+        // Trying to increase the visit count
         Keep keep = _keepsService.GetKeepById(keepId);
         return Ok(keep);
     }
