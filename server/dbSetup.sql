@@ -53,3 +53,17 @@ CREATE TABLE
     FOREIGN KEY (vaultId) REFERENCES vaults (id) ON DELETE CASCADE,
     FOREIGN KEY (creatorId) REFERENCES accounts (id) ON DELETE CASCADE
   );
+
+  SELECT
+        vaultKeeps.*,
+        accounts.*
+        FROM vaultKeeps
+        JOIN accounts ON accounts.id = vaultKeeps.creatorId
+        WHERE vaultId = 61;
+
+         SELECT
+        vaultKeeps.*,
+        keeps.*
+        FROM vaultKeeps
+        JOIN keeps ON vaultKeeps.keepId = keeps.id
+         WHERE vaultId = 61 ;

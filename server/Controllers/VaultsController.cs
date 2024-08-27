@@ -10,11 +10,13 @@ public class VaultsController : ControllerBase
 {
     private readonly VaultsService _vaultsService;
     private readonly Auth0Provider _auth0Provider;
+    private readonly VaultKeepsService _vaultKeepsService;
 
-    public VaultsController(VaultsService vaultsService, Auth0Provider auth0Provider)
+    public VaultsController(VaultsService vaultsService, Auth0Provider auth0Provider, VaultKeepsService vaultKeepsService)
     {
         _vaultsService = vaultsService;
         _auth0Provider = auth0Provider;
+        _vaultKeepsService = vaultKeepsService;
     }
 
     [HttpPost]
@@ -81,18 +83,18 @@ public class VaultsController : ControllerBase
         }
     }
 
-    // [HttpGet("{vaultId}/keeps")]
-    // public async Task<ActionResult<List<Keep>>> GetKeepsInAPublicVault(int vaultId)
-    // {
-    //     try 
-    //     {
-    //         Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
-    //         List<Keep> keeps = _vaultKeepsService.GetKeepsInAPublicVault(vaultId);
-    //         return Ok(keeps);
-    //     }
-    //     catch (Exception exception)
-    //     {
-    //       return BadRequest(exception.Message);
-    //     }
-    // }
+    [HttpGet("{vaultId}/keeps")]
+    public async Task<ActionResult<List<VaultKeepKeep>>> GetKeepsInAPublicVault(int vaultId)
+    {
+        try 
+        {
+            Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+            List<VaultKeepKeep> keeps = _vaultKeepsService.GetKeepsInAPublicVault(vaultId);
+            return Ok(keeps);
+        }
+        catch (Exception exception)
+        {
+          return BadRequest(exception.Message);
+        }
+    }
 }

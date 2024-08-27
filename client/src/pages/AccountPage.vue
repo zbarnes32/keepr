@@ -5,6 +5,7 @@ import KeepCard from '@/components/globals/KeepCard.vue';
 import { keepsService } from '@/services/KeepsService.js';
 import Pop from '@/utils/Pop.js';
 import { Keep } from '@/models/Keep.js';
+import { vaultsService } from '@/services/VaultsService.js';
 
 const account = computed(() => AppState.account)
 const keeps = computed(() => AppState.keeps)
@@ -17,6 +18,15 @@ onMounted(getKeeps)
 async function getKeeps(){
   try {
     await keepsService.getKeeps()
+  }
+  catch (error){
+    Pop.error(error);
+  }
+}
+
+async function getVaults(){
+  try {
+    await vaultsService.getVaults()
   }
   catch (error){
     Pop.error(error);
