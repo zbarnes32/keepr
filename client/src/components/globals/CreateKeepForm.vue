@@ -31,18 +31,18 @@ async function createKeep(){
 
 <template>
 
-<form @submit.prevent="createKeep()">
-    <div class="mb-2">
-        <label for="name">Name</label>
-        <input v-model="editableKeepData.name" type="text" id="name" maxlength="255" required>
+<form @submit.prevent="createKeep()" class="p-2">
+    <div class="mt-2 mb-4">
+        <label for="name" class="mb-1">Name</label>
+        <input v-model="editableKeepData.name" class="form-control" type="text" id="name" maxlength="255" required>
     </div>
-    <div class="mb-2">
-        <label for="description">Description</label>
-        <input v-model="editableKeepData.description" type="text" id="description" maxlength="1000" required>
+    <div class="mb-4">
+        <label for="description" class="mb-1">Description</label>
+        <input v-model="editableKeepData.description" class="form-control" type="text" id="description" maxlength="1000" required>
     </div>
-    <div class="mb-2">
-        <label for="img">Image URL</label>
-        <input v-model="editableKeepData.img" type="text" id="img" maxlength="1000" required>
+    <div class="mb-4">
+        <label for="img" class="mb-1">Image URL</label>
+        <input v-model="editableKeepData.img" class="form-control" type="text" id="img" maxlength="1000" required>
     </div>
     <div class="text-end p-2">
         <button type="submit" class="btn btn-info rounded-pill">Create</button>
@@ -52,5 +52,7 @@ async function createKeep(){
 
 
 <style lang="scss" scoped>
+
+
 
 </style>

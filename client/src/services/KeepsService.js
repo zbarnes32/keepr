@@ -8,6 +8,8 @@ class KeepsService {
   async createKeep(keepData) {
       const response = await api.post('api/keeps', keepData)
       logger.log("Created a keep", response.data)
+      const newKeep = new Keep(response.data)
+      AppState.keeps.push(newKeep)
   }
   async getKeepById(keepId) {
       const response = await api.get(`api/keeps/${keepId}`)
