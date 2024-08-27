@@ -2,6 +2,8 @@
 import { onMounted, ref } from 'vue';
 import { loadState, saveState } from '../utils/Store.js';
 import Login from './Login.vue';
+import MainModal from './globals/MainModal.vue';
+import CreateKeepForm from './globals/CreateKeepForm.vue';
 
 const theme = ref(loadState('theme') || 'light')
 
@@ -18,10 +20,10 @@ function toggleTheme() {
 </script>
 
 <template>
-  <nav class="navbar navbar-expand-sm navbar-dark bg-dark px-3">
+  <nav class="navbar navbar-expand-sm navbar-light bg-light px-3 border-bottom">
     <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
-      <div class="d-flex flex-column align-items-center">
-        <img alt="logo" src="/img/cw-logo.png" height="45" />
+      <div class="d-flex flex-column justify-content-center">
+        <button role="button" class="fs-4 rounded-pill px-3">Home</button>
       </div>
     </router-link>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
@@ -30,10 +32,14 @@ function toggleTheme() {
     </button>
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav me-auto">
-        <li>
-          <router-link :to="{ name: 'About' }" class="btn text-success lighten-30 selectable text-uppercase">
-            About
-          </router-link>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Create
+          </a>
+          <ul class="dropdown-menu dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <li><a class="dropdown-item" role="button" data-bs-toggle="modal" data-bs-target="#createKeepModal">New Keep</a></li>
+            <li><a class="dropdown-item" href="#">New Vault</a></li>
+          </ul>
         </li>
       </ul>
       <!-- LOGIN COMPONENT HERE -->
@@ -46,6 +52,11 @@ function toggleTheme() {
       <Login />
     </div>
   </nav>
+
+  <MainModal modalId="createKeepModal">
+    <template #modalHeader>Create a Keep</template>
+    <template #modalBody><CreateKeepForm /></template>
+  </MainModal>
 </template>
 
 <style scoped>
