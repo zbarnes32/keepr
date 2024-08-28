@@ -35,7 +35,7 @@ public class VaultsService
     {
         Vault vault = _repository.GetVaultById(vaultId);
 
-        if(vault == null)
+        if(vault == null || vault.IsPrivate == true)
         {
             throw new Exception($"Unable to find a vault with the id of {vaultId}");
         }
