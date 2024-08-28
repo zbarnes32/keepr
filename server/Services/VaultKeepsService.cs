@@ -6,9 +6,11 @@ namespace keepr.Services;
 public class VaultKeepsService
 {
     private readonly VaultKeepsRepository _repository;
-    public VaultKeepsService(VaultKeepsRepository repository)
+    private readonly VaultsService _vaultsService;
+    public VaultKeepsService(VaultKeepsRepository repository, VaultsService vaultsService)
     {
         _repository = repository;
+        _vaultsService = vaultsService;
     }
 
     internal VaultKeep CreateVaultKeep(VaultKeep vaultKeepData)
@@ -43,9 +45,16 @@ public class VaultKeepsService
         return vaultKeep;
     }
 
-    internal List<VaultKeepKeep> GetKeepsInAPublicVault(int vaultId)
+    internal List<VaultKeepKeep> GetKeepsInAPublicVault(string userId, int vaultId)
     {
+        Vault vault = _vaultsService.GetVaultById(vaultId, userId);
         List<VaultKeepKeep> keeps = _repository.GetKeepsInAPublicVault(vaultId);
+
+        if(userId != vault.CreatorId && vault.IsPrivate == true)
+        {
+            throw new Exception ($"Unable to find vault with id of {vault.Id}");
+        }
+
         return keeps;
     }
     }

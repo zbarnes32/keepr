@@ -20,7 +20,7 @@ public class VaultsService
 
     internal string DestroyVault(int vaultId, string userId)
     {
-       Vault vaultToDestroy = GetVaultById(vaultId);
+       Vault vaultToDestroy = GetVaultById(vaultId, userId);
        if (vaultToDestroy.CreatorId != userId)
        {
         throw new Exception("Unable to delete a vault that is not yours.");
@@ -31,11 +31,16 @@ public class VaultsService
        return $"The {vaultToDestroy.Name} has been deleted.";
     }
 
-    internal Vault GetVaultById(int vaultId)
+    internal Vault GetVaultById(int vaultId, string userId)
     {
         Vault vault = _repository.GetVaultById(vaultId);
 
-        if(vault == null || vault.IsPrivate == true)
+        if(userId != vault.CreatorId && vault.IsPrivate == true)
+        {
+            throw new Exception($"Unable to find a vault with the id of {vaultId}");
+        }
+
+        if(vault == null)
         {
             throw new Exception($"Unable to find a vault with the id of {vaultId}");
         }
@@ -45,7 +50,7 @@ public class VaultsService
 
     internal Vault UpdateVault(int vaultId, string userId, Vault vaultData)
     {
-        Vault vaultToUpdate = GetVaultById(vaultId);
+        Vault vaultToUpdate = GetVaultById(vaultId, userId);
 
         if (vaultToUpdate.CreatorId != userId)
         {
