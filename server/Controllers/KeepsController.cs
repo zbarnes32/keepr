@@ -56,7 +56,7 @@ public async Task<ActionResult<Keep>> GetKeepById(int keepId)
     {
         Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
         // Trying to increase the visit count
-        Keep keep = _keepsService.GetKeepById(keepId);
+        Keep keep = _keepsService.IncrementViews(keepId, userInfo?.Id);
         return Ok(keep);
     }
     catch (Exception exception)

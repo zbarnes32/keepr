@@ -20,7 +20,7 @@ public class KeepsService
 
     internal string DestroyKeep(int keepId, string userId)
     {
-        Keep keepToDestroy = GetKeepById(keepId);
+        Keep keepToDestroy = GetKeepById(keepId, userId);
         if (keepToDestroy.CreatorId != userId)
         {
             throw new Exception("Unable to delete a keep you did not create.");
@@ -37,7 +37,7 @@ public class KeepsService
         return keeps;
     }
 
-    internal Keep GetKeepById(int keepId)
+    internal Keep GetKeepById(int keepId, string userId)
     {
         Keep keep = _repository.GetKeepById(keepId);
 
@@ -48,9 +48,20 @@ public class KeepsService
         return keep;
     }
 
+    internal Keep IncrementViews(int keepId, string userId)
+    {
+        Keep keep = GetKeepById(keepId, userId);
+
+        keep.Views++;
+
+        _repository.UpdateKeep(keep);
+
+        return keep;
+    }
+
     internal Keep UpdateKeep(int keepId, string userId, Keep keepData)
     {
-        Keep keepToUpdate = GetKeepById(keepId);
+        Keep keepToUpdate = GetKeepById(keepId, userId);
 
         if(keepToUpdate.CreatorId != userId)
         {
