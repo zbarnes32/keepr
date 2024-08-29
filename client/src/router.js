@@ -24,10 +24,14 @@ const routes = [
     beforeEnter: authGuard
   },
   {
-    // FIXME go reference gregslist for the id
     path: '/profiles/:profileId',
     name: 'Profile',
     component: loadPage('ProfilePage')
+  },
+  {
+    path: '/vaults/:vaultId',
+    name: 'Vault',
+    component: loadPage('VaultPage')
   }
 ]
 

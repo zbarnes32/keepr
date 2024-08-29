@@ -8,6 +8,7 @@ import { Keep } from '@/models/Keep.js';
 import { vaultsService } from '@/services/VaultsService.js';
 import VaultCard from '@/components/globals/VaultCard.vue';
 import { Vault } from '@/models/Vault.js';
+import { RouterLink } from 'vue-router';
 
 const account = computed(() => AppState.account)
 
@@ -67,7 +68,9 @@ const props = defineProps({
         <p class="fs-3 fw-bold">Vaults</p>
         <!-- FIXME: Currently showing all vaults -->
         <div v-for="vault in myVaults" :key="vault.id" class="col-md-3">
-          <VaultCard :vaultProp="vault" />
+          <RouterLink :to="{ name: 'Vault', params: { vaultId: vault.id } }">
+            <VaultCard :vaultProp="vault" />
+          </RouterLink>
         </div>
       </section>
 

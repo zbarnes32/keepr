@@ -84,7 +84,9 @@ async function getProfileVaults(profileId) {
         <p class="fs-3 fw-bold">Vaults</p>
         <!-- FIXME: Currently showing all vaults -->
         <div v-for="vault in profileVaults" :key="vault.id" class="col-md-3">
+          <RouterLink :to="{ name: 'Vault', params: { vaultId: vault.id } }">
             <VaultCard :vaultProp="vault" />
+          </RouterLink>
         </div>
     </section>
     
