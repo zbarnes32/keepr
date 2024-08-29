@@ -2,11 +2,33 @@
 import { AppState } from '@/AppState.js';
 import { Keep } from '@/models/Keep.js';
 import { keepsService } from '@/services/KeepsService.js';
+import { vaultKeepsService } from '@/services/VaultKeepsService.js';
+import { logger } from '@/utils/Logger.js';
 import Pop from '@/utils/Pop.js';
-import { computed, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
 const keep = computed(() => AppState.activeKeep)
+const account = computed(() => AppState.account)
+
+const vaults = computed(() => AppState.myVaults)
+
+const editableVaultData = ref({
+  vaultId: 0,
+  keepId: 0
+})
+
+
+async function createVaultKeep() {
+  try {
+    editableVaultData.value.keepId = keep.value.id
+    await vaultKeepsService.createVaultKeep(editableVaultData.value)
+    Pop.toast("Saved to vault")
+  }
+  catch (error) {
+    Pop.error(error);
+  }
+}
 // const props = defineProps({
 //     keepProp: { type: Keep, required: true }
 // })
@@ -43,10 +65,21 @@ const keep = computed(() => AppState.activeKeep)
           </div>
           <div class="d-flex justify-content-between">
             <!-- TODO dont show this if I am not logged in -->
-            <div class="d-flex">
-              <!-- TODO show my vaults -->
-              <p class="text-danger">selectable vault form goes here</p>
-              <button type="submit" class="btn btn-info">Save</button>
+            <div v-if="account">
+              <div class="d-flex">
+                <!-- TODO show my vaults -->
+                <form @submit.prevent="createVaultKeep()" class="d-flex">
+                  <select id="vaultId" v-model="editableVaultData.vaultId" class="form-select"
+                    aria-label="Choose a Vault">
+                    <option selected value="0" disabled>Choose a Vault</option>
+                    <option v-for="vault in vaults" :key="vault.id" :value="vault.id">
+                      {{ vault.name }}
+                    </option>
+                  </select>
+                  <button type="submit" class="btn btn-info">Save</button>
+                </form>
+
+              </div>
             </div>
 
             <!-- TODO add a routerlink to the profile page -->
