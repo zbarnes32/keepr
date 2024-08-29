@@ -36,7 +36,10 @@ async function destroyKeep(keepId){
                     <button v-if="account?.id == keepProp.creatorId" class="bg-danger rounded-pill" @click="destroyKeep(keepProp.id)"><i class="mdi mdi-delete-forever text-light"></i>
                     </button>
                 <p class="fs-4 card-name">{{ keepProp.name }}</p>
-                <img :src="keepProp.creator.picture" class="creator-picture">
+                <RouterLink :to="{ name: 'Profile', params: { profileId: keepProp.creatorId }}" 
+                    :title="`Click here to go to ${keepProp.creator.name}'s profile.'`">
+                    <img :src="keepProp.creator.picture" :alt="keepProp.creator.name" class="creator-picture">
+                </RouterLink>
             </div>
             </div>
         </div>

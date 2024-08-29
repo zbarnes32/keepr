@@ -75,3 +75,5 @@ CREATE TABLE
         FROM vaults
         JOIN accounts ON accounts.id = vaults.creatorId
         WHERE vaults.creatorId = '66a01f1b3c6756484d577837';
+
+        DELETE FROM `vaults`;

@@ -25,7 +25,7 @@ const routes = [
   },
   {
     // FIXME go reference gregslist for the id
-    path: '/profile/profileId',
+    path: '/profiles/:profileId',
     name: 'Profile',
     component: loadPage('ProfilePage')
   }
