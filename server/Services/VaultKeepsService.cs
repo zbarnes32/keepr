@@ -1,6 +1,8 @@
 
 
 
+using Microsoft.Extensions.Configuration.UserSecrets;
+
 namespace keepr.Services;
 
 public class VaultKeepsService
@@ -13,9 +15,17 @@ public class VaultKeepsService
         _vaultsService = vaultsService;
     }
 
-    internal VaultKeep CreateVaultKeep(VaultKeep vaultKeepData)
+    internal VaultKeep CreateVaultKeep(VaultKeep vaultKeepData, string userId)
     {
+        Vault vault = _vaultsService.GetVaultById(vaultKeepData.VaultId, userId);
+       
+        if( userId != vault.CreatorId)
+        {
+            throw new Exception("Unable to create a vaultkeep.");
+        }
+        
        VaultKeep vaultKeep = _repository.CreateVaultKeep(vaultKeepData);
+
        return vaultKeep; 
     }
 
