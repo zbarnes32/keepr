@@ -10,35 +10,38 @@ import VaultCard from '@/components/globals/VaultCard.vue';
 import { Vault } from '@/models/Vault.js';
 
 const account = computed(() => AppState.account)
+
+// FIXME update this to use mykeeps
 const keeps = computed(() => AppState.keeps)
+
 const myVaults = computed(() => AppState.myVaults)
 
-const props = defineProps({ 
+const props = defineProps({
   keepProp: { type: Keep },
   vaultProp: { type: Vault }
 })
 
-onMounted(getKeeps)
-onMounted(getMyVaults)
+// onMounted(getKeeps)
+// onMounted(getMyVaults)
 
+// REVIEW a better approach is use the authservice
+// async function getKeeps(){
+//   try {
+//     await keepsService.getKeeps()
+//   }
+//   catch (error){
+//     Pop.error(error);
+//   }
+// }
 
-async function getKeeps(){
-  try {
-    await keepsService.getKeeps()
-  }
-  catch (error){
-    Pop.error(error);
-  }
-}
-
-async function getMyVaults(){
-  try {
-    await vaultsService.getMyVaults()
-  }
-  catch (error){
-    Pop.error(error);
-  }
-}
+// async function getMyVaults(){
+//   try {
+//     await vaultsService.getMyVaults()
+//   }
+//   catch (error){
+//     Pop.error(error);
+//   }
+// }
 
 </script>
 
@@ -47,30 +50,36 @@ async function getMyVaults(){
     <div v-if="account">
       <section class="row text-center">
         <div class="col-12">
-          <img :src="account.coverImg" alt="Cover Image">
+          <div>
+            <img :src="account.coverImg" alt="Cover Image">
+            <span>
+              <i class="mdi mdi-dots-horizontal fs-4"></i>
+              <!-- TODO keep it simple just add the form account edit form  -->
+            </span>
+          </div>
           <img :src="account.picture" :alt="account.name" class="profile-picture">
           <p class="fs-2">{{ account.name }}</p>
-          <p>{{myVaults.length }} Vaults | {{ keeps.length }} Keeps</p>
+          <p>{{ myVaults.length }} Vaults | {{ keeps.length }} Keeps</p>
         </div>
       </section>
 
       <section class="row">
-          <p class="fs-3">Vaults</p>
-          <!-- FIXME: Currently showing all vaults -->
-          <div v-for="vault in myVaults" :key="vault.id" class="col-md-3">
-            <VaultCard :vaultProp="vault" />
-          </div>
+        <p class="fs-3 fw-bold">Vaults</p>
+        <!-- FIXME: Currently showing all vaults -->
+        <div v-for="vault in myVaults" :key="vault.id" class="col-md-3">
+          <VaultCard :vaultProp="vault" />
+        </div>
       </section>
 
       <section class="row">
-        <p class="fs-3">Keeps</p>
+        <p class="fs-3 fw-bold">Keeps</p>
         <div v-for="keep in keeps" :key="keep.id" class="col-md-3">
           <!-- FIXME: Only show the cards that you are the creator of. -->
           <!-- <div v-if="account?.id == keepProp.creatorId"> -->
-            <KeepCard :keepProp="keep" />
+          <KeepCard :keepProp="keep" />
           <!-- </div> -->
         </div>
-        
+
       </section>
     </div>
     <div v-else>

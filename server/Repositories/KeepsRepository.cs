@@ -23,7 +23,7 @@ public class KeepsRepository
         JOIN accounts ON accounts.id = keeps.creatorId
         WHERE keeps.id = LAST_INSERT_ID();";
 
-        Keep keep = _db.Query<Keep, Profile, Keep>(sql, (keep, profile) => 
+        Keep keep = _db.Query<Keep, Profile, Keep>(sql, (keep, profile) =>
         {
             keep.Creator = profile;
             return keep;
@@ -38,12 +38,15 @@ public class KeepsRepository
 
         int rowsAffected = _db.Execute(sql, new { keepId });
 
-        if(rowsAffected == 0) throw new Exception("Unable to delete.");
+        if (rowsAffected == 0) throw new Exception("Unable to delete.");
         if (rowsAffected > 1) throw new Exception("Deleted more than attended.");
     }
 
     internal List<Keep> GetAllKeeps()
     {
+
+        // TODO add the SQL Count for kept
+
         string sql = @"
         SELECT 
         keeps.*,
@@ -51,18 +54,19 @@ public class KeepsRepository
         FROM keeps
         JOIN accounts ON accounts.id = keeps.creatorId;";
 
-    List<Keep> keeps = _db.Query<Keep, Profile, Keep>(sql, 
-    (keep, profile) => 
-    {
-        keep.Creator = profile;
-        return keep;
-    }).ToList();
+        List<Keep> keeps = _db.Query<Keep, Profile, Keep>(sql,
+        (keep, profile) =>
+        {
+            keep.Creator = profile;
+            return keep;
+        }).ToList();
 
-    return keeps;
+        return keeps;
     }
 
     internal Keep GetKeepById(int keepId)
     {
+        // TODO add the sql count here as well after you get it ^^^ there
         string sql = @"
         SELECT
         keeps.*,
@@ -71,8 +75,8 @@ public class KeepsRepository
         JOIN accounts ON accounts.id = keeps.creatorId
         WHERE keeps.id = @keepId;";
 
-        Keep keep = _db.Query<Keep, Profile, Keep>(sql, 
-        (keep, profile) => 
+        Keep keep = _db.Query<Keep, Profile, Keep>(sql,
+        (keep, profile) =>
     {
         keep.Creator = profile;
         return keep;
@@ -99,8 +103,8 @@ public class KeepsRepository
         JOIN accounts ON accounts.id = keeps.creatorId
         WHERE keeps.id = @Id;";
 
-        Keep keep = _db.Query<Keep, Profile, Keep>(sql, 
-        (keep, profile) => 
+        Keep keep = _db.Query<Keep, Profile, Keep>(sql,
+        (keep, profile) =>
     {
         keep.Creator = profile;
         return keep;

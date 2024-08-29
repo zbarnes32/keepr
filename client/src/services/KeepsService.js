@@ -25,6 +25,9 @@ class KeepsService {
       logger.log("Got the keep via its id", response.data)
   }
   setActiveKeep(keepProp) {
+
+    // FIXME GO GET THE KEEP BY ITS ID
+
       AppState.activeKeep = keepProp
   }
   

@@ -14,7 +14,8 @@ class VaultsService {
     async destroyVault(vaultId) {
         const response = await api.delete(`api/vaults/${vaultId}`)
         logger.log("Deleted vault", response.data)
-        AppState.activeVault = null
+        // TODO remove the vault from my vaults in the appstate
+        // AppState.activeVault = null
     }
     setActiveVault(vaultProp) {
         AppState.activeVault = vaultProp

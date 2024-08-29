@@ -34,6 +34,7 @@ public class AccountsRepository
 
   internal Account Edit(Account update)
   {
+    // TODO add cover image
     string sql = @"
             UPDATE accounts
             SET 
@@ -44,9 +45,9 @@ public class AccountsRepository
     return update;
   }
 
-    internal List<Vault> GetMyVaults(string accountId)
-    {
-        string sql = @"
+  internal List<Vault> GetMyVaults(string accountId)
+  {
+    string sql = @"
         SELECT
         vaults.*,
         accounts.*
@@ -54,15 +55,15 @@ public class AccountsRepository
         JOIN accounts ON accounts.id = vaults.creatorId
         WHERE vaults.creatorId = @accountId;";
 
-        List<Vault> myVaults = _db.Query<Vault, Profile, Vault>(sql, (vault, profile) => 
-        {
-          vault.Creator = profile;
-          return vault;
-        }, new { accountId }).ToList();
+    List<Vault> myVaults = _db.Query<Vault, Profile, Vault>(sql, (vault, profile) =>
+    {
+      vault.Creator = profile;
+      return vault;
+    }, new { accountId }).ToList();
 
-          return myVaults;
-            
-    }
-    }
+    return myVaults;
+
+  }
+}
 
 

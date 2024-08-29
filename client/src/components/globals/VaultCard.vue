@@ -13,9 +13,9 @@ const vault = computed(() => AppState.activeVault)
 
 const props = defineProps({ vaultProp: {type: Vault, required: true} })
 
-function setActiveVault() {
-    vaultsService.setActiveVault(props.vaultProp)
-}
+// function setActiveVault() {
+//     vaultsService.setActiveVault(props.vaultProp)
+// }
 
 async function destroyVault(vaultId){
     try {
@@ -35,7 +35,8 @@ async function destroyVault(vaultId){
 
 <section>
     <div class="shadow m-2" role="button">
-        <div class="card vault-card bg-dark text-white" @click="setActiveVault()">
+        <!-- TODO add a routerlink to go the vault page by its id -->
+        <div class="card vault-card bg-dark text-white">
             <img :src="vaultProp.img" class="card-img" :alt="vaultProp.name">
             <div class="card-img-overlay">
                 <button v-if="account?.id == vaultProp.creatorId" class="bg-danger rounded-pill" @click="destroyVault(vaultProp.id)"><i class="mdi mdi-delete-forever text-light"></i>

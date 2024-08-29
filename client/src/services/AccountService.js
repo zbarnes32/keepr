@@ -12,6 +12,8 @@ class AccountService {
       logger.error('HAVE YOU STARTED YOUR SERVER YET???', err)
     }
   }
+
+  // TODO add the edit method for the account
 }
 
 export const accountService = new AccountService()
