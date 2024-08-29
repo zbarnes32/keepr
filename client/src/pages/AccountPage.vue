@@ -6,14 +6,21 @@ import { keepsService } from '@/services/KeepsService.js';
 import Pop from '@/utils/Pop.js';
 import { Keep } from '@/models/Keep.js';
 import { vaultsService } from '@/services/VaultsService.js';
+import VaultCard from '@/components/globals/VaultCard.vue';
+import { Vault } from '@/models/Vault.js';
 
 const account = computed(() => AppState.account)
 const keeps = computed(() => AppState.keeps)
-const vaults = computed(() => AppState.vaults)
+const myVaults = computed(() => AppState.myVaults)
 
-defineProps({ keepProp: { type: Keep }})
+const props = defineProps({ 
+  keepProp: { type: Keep },
+  vaultProp: { type: Vault }
+})
 
 onMounted(getKeeps)
+onMounted(getMyVaults)
+
 
 async function getKeeps(){
   try {
@@ -24,9 +31,9 @@ async function getKeeps(){
   }
 }
 
-async function getVaults(){
+async function getMyVaults(){
   try {
-    await vaultsService.getVaults()
+    await vaultsService.getMyVaults()
   }
   catch (error){
     Pop.error(error);
@@ -43,15 +50,18 @@ async function getVaults(){
           <img :src="account.coverImg" alt="Cover Image">
           <img :src="account.picture" :alt="account.name" class="profile-picture">
           <p class="fs-2">{{ account.name }}</p>
-          <p>{{vaults.length }} Vaults | {{ keeps.length }} Keeps</p>
+          <p>{{myVaults.length }} Vaults | {{ keeps.length }} Keeps</p>
         </div>
       </section>
+
       <section class="row">
-        <div class="col-12">
           <p class="fs-3">Vaults</p>
-          <!-- Insert Vault Cards here -->
-        </div>
+          <!-- FIXME: Currently showing all vaults -->
+          <div v-for="vault in myVaults" :key="vault.id" class="col-md-3">
+            <VaultCard :vaultProp="vault" />
+          </div>
       </section>
+
       <section class="row">
         <p class="fs-3">Keeps</p>
         <div v-for="keep in keeps" :key="keep.id" class="col-md-3">

@@ -5,6 +5,20 @@ import { AppState } from "@/AppState.js"
 
 
 class VaultsService {
+    async getMyVaults() {
+      const response = await api.get('account/vaults')
+      logger.log("Getting my vaults", response.data)
+      const myVaults = response.data.map(vaultData => new Vault(vaultData))
+      AppState.myVaults = myVaults
+    }
+    async destroyVault(vaultId) {
+        const response = await api.delete(`api/vaults/${vaultId}`)
+        logger.log("Deleted vault", response.data)
+        AppState.activeVault = null
+    }
+    setActiveVault(vaultProp) {
+        AppState.activeVault = vaultProp
+    }
     async getVaults() {
         const response = await api.get('api/vaults')
         logger.log("Got the vaults", response.data)
