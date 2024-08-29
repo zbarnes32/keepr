@@ -4,6 +4,10 @@ import { audience, clientId, domain } from '../env'
 import { accountService } from './AccountService'
 import { api } from './AxiosService'
 import { socketService } from './SocketService'
+import Pop from '@/utils/Pop.js'
+import { vaultsService } from './VaultsService.js'
+import { keepsService } from './KeepsService.js'
+import { profileService } from './ProfileService.js'
 
 
 export const AuthService = initialize({
@@ -25,6 +29,21 @@ AuthService.on(AUTH_EVENTS.AUTHENTICATED, async function() {
 
   // TODO fixes the account page 
   // GO GET YOUR VAULTS AND KEEPS
+
+try {
+  await vaultsService.getMyVaults()
+}
+catch (error){
+  Pop.error(error);
+}
+
+try {
+  await profileService.getMyKeeps()
+}
+catch (error){
+  Pop.error(error);
+}
+  
 
 })
 

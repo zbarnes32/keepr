@@ -19,7 +19,7 @@ const props = defineProps({ vaultProp: {type: Vault, required: true} })
 
 async function destroyVault(vaultId){
     try {
-      const wantsToDestroy = await Pop.confirm(`Are you sure that you want to delete ${vault.value.name}?`)
+      const wantsToDestroy = await Pop.confirm(`Are you sure that you want to delete?`)
       if (!wantsToDestroy) return
       await vaultsService.destroyVault(vaultId)
     }

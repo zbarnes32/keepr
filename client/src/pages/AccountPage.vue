@@ -12,7 +12,7 @@ import { Vault } from '@/models/Vault.js';
 const account = computed(() => AppState.account)
 
 // FIXME update this to use mykeeps
-const keeps = computed(() => AppState.keeps)
+const myKeeps = computed(() => AppState.myKeeps)
 
 const myVaults = computed(() => AppState.myVaults)
 
@@ -59,7 +59,7 @@ const props = defineProps({
           </div>
           <img :src="account.picture" :alt="account.name" class="profile-picture">
           <p class="fs-2">{{ account.name }}</p>
-          <p>{{ myVaults.length }} Vaults | {{ keeps.length }} Keeps</p>
+          <p>{{ myVaults.length }} Vaults | {{ myKeeps.length }} Keeps</p>
         </div>
       </section>
 
@@ -73,7 +73,7 @@ const props = defineProps({
 
       <section class="row">
         <p class="fs-3 fw-bold">Keeps</p>
-        <div v-for="keep in keeps" :key="keep.id" class="col-md-3">
+        <div v-for="keep in myKeeps" :key="keep.id" class="col-md-3">
           <!-- FIXME: Only show the cards that you are the creator of. -->
           <!-- <div v-if="account?.id == keepProp.creatorId"> -->
           <KeepCard :keepProp="keep" />
