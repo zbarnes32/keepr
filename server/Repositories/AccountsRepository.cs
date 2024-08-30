@@ -34,7 +34,6 @@ public class AccountsRepository
 
   internal Account Edit(Account update)
   {
-    // TODO add cover image
     string sql = @"
             UPDATE accounts
             SET 

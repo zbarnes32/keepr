@@ -5,7 +5,7 @@ import { keepsService } from '@/services/KeepsService.js';
 import { vaultKeepsService } from '@/services/VaultKeepsService.js';
 import { logger } from '@/utils/Logger.js';
 import Pop from '@/utils/Pop.js';
-import { computed, ref, watch } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import { RouterLink, useRoute } from 'vue-router';
 
 const keep = computed(() => AppState.activeKeep)
@@ -33,7 +33,7 @@ async function createVaultKeep() {
 //     keepProp: { type: Keep, required: true }
 // })
 
-//REVIEW: Since I'm in a model, how do I get the keepId. Can't use route.params.keepId, right?
+
 // WE FIX THIS IN THE SERVICE
 // async function getKeepById(keepId) {
 //     try {
@@ -80,7 +80,6 @@ async function createVaultKeep() {
               </div>
             </div>
 
-            <!-- TODO add a routerlink to the profile page -->
             <div class="d-flex align-items-center">
               <RouterLink :to="{ name: 'Profile', params: { profileId: keep.creatorId }}" 
                     :title="`Click here to go to ${keep.creator.name}'s profile.'`">

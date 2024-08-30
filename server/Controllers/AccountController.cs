@@ -44,7 +44,6 @@ public class AccountController : ControllerBase
   }
 
 
-  // TODO add a put for the account
 
   [HttpPut]
 

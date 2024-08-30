@@ -17,7 +17,6 @@ class AccountService {
     }
   }
 
-  // TODO add the edit method for the account
 }
 
 export const accountService = new AccountService()

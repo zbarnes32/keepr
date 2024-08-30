@@ -13,7 +13,6 @@ import { accountService } from '@/services/AccountService.js';
 
 const account = computed(() => AppState.account)
 
-// FIXME update this to use mykeeps
 const myKeeps = computed(() => AppState.myKeeps)
 
 const myVaults = computed(() => AppState.myVaults)
@@ -71,7 +70,6 @@ async function editAccount(){
             <img :src="account.coverImg" alt="Cover Image">
             <span>
               <i class="mdi mdi-dots-horizontal fs-4"></i>
-              <!-- TODO keep it simple just add the form account edit form  -->
             </span>
           </div>
           <div>
@@ -106,7 +104,6 @@ async function editAccount(){
 
       <section class="row">
         <p class="fs-3 fw-bold">Vaults</p>
-        <!-- FIXME: Currently showing all vaults -->
         <div v-for="vault in myVaults" :key="vault.id" class="col-md-3">
           <RouterLink :to="{ name: 'Vault', params: { vaultId: vault.id } }">
             <VaultCard :vaultProp="vault" />
@@ -117,7 +114,6 @@ async function editAccount(){
       <section class="row">
         <p class="fs-3 fw-bold">Keeps</p>
         <div v-for="keep in myKeeps" :key="keep.id" class="col-md-3">
-          <!-- FIXME: Only show the cards that you are the creator of. -->
           <!-- <div v-if="account?.id == keepProp.creatorId"> -->
           <KeepCard :keepProp="keep" />
           <!-- </div> -->

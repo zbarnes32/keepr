@@ -10,14 +10,10 @@ import Pop from '@/utils/Pop.js';
 import { computed, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
-
-// TODO get profile 
 const profile = computed(() => AppState.profile)
 
-// TODO get profile keeps
 const profileKeeps = computed(() => AppState.profileKeeps)
 
-// TODO get profile vaults
 const profileVaults = computed(() => AppState.profileVaults)
 
 const route = useRoute()
@@ -82,7 +78,6 @@ async function getProfileVaults(profileId) {
 
     <section class="row">
         <p class="fs-3 fw-bold">Vaults</p>
-        <!-- FIXME: Currently showing all vaults -->
         <div v-for="vault in profileVaults" :key="vault.id" class="col-md-3">
           <RouterLink :to="{ name: 'Vault', params: { vaultId: vault.id } }">
             <VaultCard :vaultProp="vault" />
@@ -93,7 +88,6 @@ async function getProfileVaults(profileId) {
     <section class="row">
         <p class="fs-3 fw-bold">Keeps</p>
         <div v-for="keep in profileKeeps" :key="keep.id" class="col-md-3">
-          <!-- FIXME: Only show the cards that the user is the creator of. -->
           <KeepCard :keepProp="keep" />
         </div>
       </section>

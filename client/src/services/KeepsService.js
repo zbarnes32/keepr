@@ -37,7 +37,7 @@ class KeepsService {
   setActiveKeep(keepProp) {
 
     // FIXME GO GET THE KEEP BY ITS ID
-
+      
       AppState.activeKeep = keepProp
   }
   

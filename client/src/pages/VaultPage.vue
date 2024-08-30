@@ -26,7 +26,6 @@ watch(() => route.params.vaultId, () => {
 
 defineProps({ vaultKeep: { type: VaultKeep, required: true } })
 
-// TODO: Add null check
 async function getVaultById(vaultId) {
   try {
     await vaultsService.getVaultById(vaultId)
