@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { AppState } from '../AppState.js';
 import KeepCard from '@/components/globals/KeepCard.vue';
 import { keepsService } from '@/services/KeepsService.js';
@@ -9,6 +9,7 @@ import { vaultsService } from '@/services/VaultsService.js';
 import VaultCard from '@/components/globals/VaultCard.vue';
 import { Vault } from '@/models/Vault.js';
 import { RouterLink } from 'vue-router';
+import { accountService } from '@/services/AccountService.js';
 
 const account = computed(() => AppState.account)
 
@@ -21,6 +22,21 @@ const props = defineProps({
   keepProp: { type: Keep },
   vaultProp: { type: Vault }
 })
+
+const editableAccountData =  ref({
+    name: '',
+    picture:'',
+    coverImg: ''
+})
+
+async function editAccount(){
+  try {
+    await accountService.editAccount(editableAccountData.value)
+  }
+  catch (error){
+    Pop.error(error);
+  }
+}
 
 // onMounted(getKeeps)
 // onMounted(getMyVaults)
@@ -58,6 +74,30 @@ const props = defineProps({
               <!-- TODO keep it simple just add the form account edit form  -->
             </span>
           </div>
+          <div>
+
+            <form @submit.prevent="editAccount()" class="p-2">
+              <div class="mt-2 mb-4">
+                <label for="name" class="mb-1">Name</label>
+              <input v-model="editableAccountData.name" class="form-control" type="text" id="name" maxlength="255"
+                required>
+              </div>
+              <div class="mb-4">
+                <label for="description" class="mb-1">Picture</label>
+                <input v-model="editableAccountData.picture" class="form-control" type="text" id="description"
+                maxlength="1000" required>
+            </div>
+            <div class="mb-4">
+              <label for="img" class="mb-1">Cover Image URL</label>
+              <input v-model="editableAccountData.coverImg" class="form-control" type="text" id="img" maxlength="1000"
+                required>
+            </div>
+            <div class="text-end p-2">
+              <button type="submit" class="btn btn-info rounded-pill">Edit Account</button>
+            </div>
+          </form>
+        </div>
+          
           <img :src="account.picture" :alt="account.name" class="profile-picture">
           <p class="fs-2">{{ account.name }}</p>
           <p>{{ myVaults.length }} Vaults | {{ myKeeps.length }} Keeps</p>

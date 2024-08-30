@@ -45,4 +45,20 @@ public class AccountController : ControllerBase
 
 
   // TODO add a put for the account
+
+  [HttpPut]
+
+  public async Task<ActionResult<Account>> Edit([FromBody] Profile editData)
+  {
+    try 
+    {
+      Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+      return Ok(_accountService.Edit(editData, userInfo.Id));
+    }
+    catch (Exception exception)
+    {
+      return BadRequest(exception.Message);
+    }
+  }
+  
 }

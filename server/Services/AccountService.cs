@@ -29,18 +29,20 @@ public class AccountService
     return account;
   }
 
-  internal Account Edit(Account editData, string accountId)
+  internal Account Edit(Profile editData, string accountId)
   {
     Account original = GetAccount(accountId);
-    original.Name = editData.Name ?? editData.Name;
-    original.Picture = editData.Picture ?? editData.Picture;
+    original.Name = editData.Name ?? original.Name;
+    original.Picture = editData.Picture ?? original.Picture;
     // TODO add the cover image
+    original.CoverImg = editData.CoverImg ?? original.CoverImg;
+
     return _repo.Edit(original);
   }
 
-    internal List<Vault> GetMyVaults(string accountId)
-    {
-        List<Vault> myVaults = _repo.GetMyVaults(accountId);
-        return myVaults;
-    }
+  internal List<Vault> GetMyVaults(string accountId)
+  {
+    List<Vault> myVaults = _repo.GetMyVaults(accountId);
+    return myVaults;
+  }
 }

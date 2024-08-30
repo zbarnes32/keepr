@@ -64,10 +64,8 @@ async function createVaultKeep() {
             <p class="keep-description gray-text">{{ keep.description }}</p>
           </div>
           <div class="d-flex justify-content-between">
-            <!-- TODO dont show this if I am not logged in -->
             <div v-if="account">
               <div class="d-flex">
-                <!-- TODO show my vaults -->
                 <form @submit.prevent="createVaultKeep()" class="d-flex">
                   <select id="vaultId" v-model="editableVaultData.vaultId" class="form-select"
                     aria-label="Choose a Vault">
