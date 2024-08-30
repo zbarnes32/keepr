@@ -50,7 +50,7 @@ public class KeepsRepository
         string sql = @"
         SELECT 
         keeps.*,
-        COUNT(vaultKeeps.id) AS kept,
+        COUNT(vaultKeeps.id) AS Kept,
         accounts.*
         FROM keeps
         JOIN accounts ON accounts.id = keeps.creatorId
@@ -73,7 +73,7 @@ public class KeepsRepository
         string sql = @"
         SELECT
         keeps.*,
-        COUNT(vaultKeeps.id) AS kept,
+        COUNT(vaultKeeps.id) AS Kept,
         accounts.*
         FROM keeps
         JOIN accounts ON accounts.id = keeps.creatorId
