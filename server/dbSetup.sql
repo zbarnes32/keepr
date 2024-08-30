@@ -77,3 +77,13 @@ CREATE TABLE
         WHERE vaults.creatorId = '66a01f1b3c6756484d577837';
 
         DELETE FROM `vaults`;
+
+
+        SELECT 
+        keeps.*,
+        COUNT(vaultKeeps.id) AS kept,
+        accounts.*
+        FROM keeps
+        JOIN accounts ON accounts.id = keeps.creatorId
+        LEFT JOIN vaultKeeps ON vaultKeeps.keepId = keeps.id
+        GROUP BY (keeps.id);
