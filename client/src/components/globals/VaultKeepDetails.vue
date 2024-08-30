@@ -3,6 +3,7 @@ import { AppState } from '@/AppState.js';
 import { VaultKeep } from '@/models/VaultKeep.js';
 import { vaultKeepsService } from '@/services/VaultKeepsService.js';
 import Pop from '@/utils/Pop.js';
+import { Modal } from 'bootstrap';
 import { computed } from 'vue';
 
 
@@ -11,11 +12,13 @@ const keep = computed(() => AppState.activeKeep)
 
 // defineProps({ vaultKeepProp: { type: VaultKeep, required: true}})
 
+// REVIEW: Why is this not waiting for my Pop.confirm before running???
 async function removeKeepFromVault(vaultKeepId) {
   try {
     const wantsToDelete = Pop.confirm("Are you sure that you want to delete?")
     if(!wantsToDelete) return
     await vaultKeepsService.removeKeepFromVault(vaultKeepId)
+    Modal.getOrCreateInstance('#keepModal').hide()
   }
   catch (error) {
     Pop.error(error);
