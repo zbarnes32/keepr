@@ -13,6 +13,7 @@ const vault = computed(() => AppState.activeVault)
 
 const props = defineProps({ vaultProp: {type: Vault, required: true} })
 
+
 // function setActiveVault() {
 //     vaultsService.setActiveVault(props.vaultProp)
 // }

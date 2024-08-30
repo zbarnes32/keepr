@@ -6,7 +6,7 @@ import { vaultKeepsService } from '@/services/VaultKeepsService.js';
 import { logger } from '@/utils/Logger.js';
 import Pop from '@/utils/Pop.js';
 import { computed, ref, watch } from 'vue';
-import { useRoute } from 'vue-router';
+import { RouterLink, useRoute } from 'vue-router';
 
 const keep = computed(() => AppState.activeKeep)
 const account = computed(() => AppState.account)
@@ -84,7 +84,10 @@ async function createVaultKeep() {
 
             <!-- TODO add a routerlink to the profile page -->
             <div class="d-flex align-items-center">
-              <img class="creator-img" :src="keep.creator.picture" :alt="keep.creator.name">
+              <RouterLink :to="{ name: 'Profile', params: { profileId: keep.creatorId }}" 
+                    :title="`Click here to go to ${keep.creator.name}'s profile.'`">
+                <img class="creator-img" :src="keep.creator.picture" :alt="keep.creator.name">
+              </RouterLink>
               <p class="my-0 px-2">{{ keep.creator.name }}</p>
             </div>
           </div>
