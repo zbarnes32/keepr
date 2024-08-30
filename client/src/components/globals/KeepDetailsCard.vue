@@ -29,6 +29,15 @@ async function createVaultKeep() {
     Pop.error(error);
   }
 }
+
+async function getKeepById(keepId) {
+  try {
+    await keepsService.getKeepById(keepId)
+  }
+  catch (error){
+    Pop.error(error);
+  }
+}
 // const props = defineProps({
 //     keepProp: { type: Keep, required: true }
 // })

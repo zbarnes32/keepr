@@ -11,8 +11,9 @@ const props = defineProps({ keepProp: {type: Keep, required: true} })
 
 function setActiveKeep() {
     
-    keepsService.setActiveKeep(props.keepProp)
+    keepsService.getKeepById(props.keepProp.id)
 }
+
 
 async function destroyKeep(keepId){
     try {
