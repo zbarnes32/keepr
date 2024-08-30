@@ -3,8 +3,10 @@ import { AppState } from '@/AppState.js';
 import KeepCard from '@/components/globals/KeepCard.vue';
 import KeepDetailsCard from '@/components/globals/KeepDetailsCard.vue';
 import MainModal from '@/components/globals/MainModal.vue';
+import VaultKeepCard from '@/components/globals/VaultKeepCard.vue';
 import VaultKeepDetails from '@/components/globals/VaultKeepDetails.vue';
 import { VaultKeep } from '@/models/VaultKeep.js';
+import { vaultKeepsService } from '@/services/VaultKeepsService.js';
 import { vaultsService } from '@/services/VaultsService.js';
 import Pop from '@/utils/Pop.js';
 import { computed, watch } from 'vue';
@@ -45,6 +47,18 @@ async function getKeepsInVault(vaultId) {
   }
 }
 
+async function removeKeepFromVault(vaultKeepId) {
+  try {
+    // debugger
+    const wantsToDelete = await Pop.confirm("Are you sure that you want to delete?")
+    if(!wantsToDelete) return
+    await vaultKeepsService.removeKeepFromVault(vaultKeepId)
+  }
+  catch (error) {
+    Pop.error(error);
+  }
+}
+
 </script>
 
 
@@ -66,9 +80,14 @@ async function getKeepsInVault(vaultId) {
       </div>
     </div>
     <div class="row">
-      <div v-for="keep in vaultKeepKeeps" :key="keep.id" class="col-md-3">
-        <!-- <pre><code>{{ JSON.stringify(keep, null, 2) }}</code></pre> -->
-        <KeepCard :keepProp="keep" />
+      <div v-for="vaultKeep in vaultKeepKeeps" :key="vaultKeep.id" class="col-md-3">
+        <pre><code>{{ JSON.stringify(vaultKeep, null, 2) }}</code></pre>
+        <!-- <VaultKeepCard :vaultKeepProp="vaultKeep" /> -->
+        <div>
+          <img :src="vaultKeep.img" alt="" height="200">
+          <button @click="removeKeepFromVault(vaultKeep.vaultKeepId)">DELETE THIS THING</button>
+        </div>
+
       </div>
     </div>
   </section>

@@ -15,10 +15,11 @@ const keep = computed(() => AppState.activeKeep)
 // REVIEW: Why is this not waiting for my Pop.confirm before running???
 async function removeKeepFromVault(vaultKeepId) {
   try {
-    const wantsToDelete = Pop.confirm("Are you sure that you want to delete?")
+    // debugger
+    const wantsToDelete = await Pop.confirm("Are you sure that you want to delete?")
     if(!wantsToDelete) return
     await vaultKeepsService.removeKeepFromVault(vaultKeepId)
-    Modal.getOrCreateInstance('#keepModal').hide()
+    Modal.getOrCreateInstance('#vaultKeepModal').hide()
   }
   catch (error) {
     Pop.error(error);
