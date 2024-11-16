@@ -81,7 +81,7 @@ async function removeKeepFromVault(vaultKeepId) {
     </div>
     <div class="row">
       <div v-for="vaultKeep in vaultKeepKeeps" :key="vaultKeep.id" class="col-md-3">
-        <pre><code>{{ JSON.stringify(vaultKeep, null, 2) }}</code></pre>
+        <!-- <pre><code>{{ JSON.stringify(vaultKeep, null, 2) }}</code></pre> -->
         <!-- <VaultKeepCard :vaultKeepProp="vaultKeep" /> -->
         <div>
           <img :src="vaultKeep.img" alt="" height="200">
